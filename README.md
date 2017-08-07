@@ -7,7 +7,7 @@ It would not show the fancy views, but the easiest way for routing to them.
 
 ```
 ┌── src                                 our source code
-│   ├── controller                      the `C` of MVC
+│   ├── controllers                     the `C` of MVC
 │   │   ├── baseController.ts           the baseController
 │   │   ├── yourController.ts           your controller extends baseController  
 │   │   └── yourOtherController.ts      your other controller extends baseController
@@ -55,14 +55,16 @@ If you create the actions other than index, you must rewrite the actionMap() let
 
 All the controllers are dynamically imported, so the app loading spead is optimized.
 
-> Note: The controller must be placed in 'conroller/' and named end up with 'Controller', so that router can find the proper module.
+> **Note: The controller must be placed in 'controllers/' and named end up with 'Controller', so that router can find the proper module.**
+
+> **`export default class` is a must in the controller.**
 
 The example controller is like below: 
 
 `./src/controller/home2Controller.ts`
 
 ```javascript
-import { BaseController } from './baseController'
+import { BaseController } from 'controllers/baseController'
 
 export default class Home2Controller extends BaseController {
     actionMap() {
