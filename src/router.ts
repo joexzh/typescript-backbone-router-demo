@@ -1,5 +1,5 @@
 import * as Backbone from "backbone"
-import { BaseController } from "./controller/baseController"
+import { BaseController } from "controllers/baseController"
 
 /**
  * You should invoke start() after initialized router.
@@ -11,7 +11,7 @@ export default class AppRouter extends Backbone.Router {
 
     constructor(defaultControllerName: string, options?: Backbone.RouterOptions) {
         super(options);
-        
+
         this.routes = <any>{
             '': 'dispatchController',
             ':controller': 'dispatchController',
@@ -44,7 +44,7 @@ export default class AppRouter extends Backbone.Router {
 
     private async executeController(controllerName: string, actionName?: string, params?: string) {
         if (!this.cachedControllers[controllerName]) {
-            const Controller = await import('./controller/' + controllerName + 'Controller');
+            const Controller = await import('controllers/' + controllerName + 'Controller');
             if (!Controller.default) throw 'controller "' + controllerName + '" not exist';
 
             this.cachedControllers[controllerName] = new Controller.default();
@@ -56,7 +56,7 @@ export default class AppRouter extends Backbone.Router {
         } else {
             actionName = actionName.toLowerCase();
             const func = controller.getAction(actionName);
-            await func(params);
+            await func.apply(controller, params);
         }
     }
 }

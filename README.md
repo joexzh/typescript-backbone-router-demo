@@ -8,9 +8,9 @@ It would not show the fancy views, but the easiest way for routing to them.
 ```
 ┌── src                                 our source code
 │   ├── controller                      the `C` of MVC
-│       ├── baseController.ts           the baseController
-│       ├── yourController.ts           your controller extends baseController  
-│       └── yourOtherController.ts      your other controller extends baseController
+│   │   ├── baseController.ts           the baseController
+│   │   ├── yourController.ts           your controller extends baseController  
+│   │   └── yourOtherController.ts      your other controller extends baseController
 │   ├── index.html                      entry html
 │   ├── index.ts                        entry ts
 │   └── router.ts                       the router that extends Backbone.Router

@@ -1,4 +1,4 @@
-import { IMap, BaseController } from "./baseController"
+import { IMap, BaseController } from "controllers/baseController"
 
 export default class HomeController extends BaseController {
     actionMap() {
