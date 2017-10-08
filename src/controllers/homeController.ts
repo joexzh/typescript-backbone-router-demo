@@ -6,12 +6,8 @@ export default class HomeController extends BaseController {
     }
 
     async index() {
-        const a = document.createElement('a');
-        a.innerText = 'go to #home2/index2';
-        a.href = '#home2/index2?abc';
-        document.body.appendChild(a);
-        
-        const br = document.createElement('br');
-        document.body.appendChild(br);
+        const HomeView = (await import("views/home/homeView")).default;
+        const view = new HomeView();
+        super.RenderView(view);
     }
 }

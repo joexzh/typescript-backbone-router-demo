@@ -6,6 +6,7 @@ export interface IMap {
 
 export abstract class BaseController {
     private readonly internalActionMap: IMap = {};
+    private static currentView: Backbone.View<Backbone.Model>;
 
     /**
      * Every member will be convert to lowerCase key and stored internal.
@@ -29,6 +30,13 @@ export abstract class BaseController {
 
     public async defaultAction() {
         await this.index();
+    }
+
+    protected RenderView(view: Backbone.View<Backbone.Model>) {
+        if (BaseController.currentView) BaseController.currentView.remove();
+        
+        BaseController.currentView = view.render();
+        return BaseController.currentView;
     }
 
     private setInternalActionMap(map: IMap) {

@@ -7,13 +7,9 @@ export default class Home2Controller extends BaseController {
         }
     }
 
-    private index2(params: string) {
-        const a = document.createElement('a');
-        a.innerText = 'go to home ' + params;
-        a.href = '#';
-        document.body.appendChild(a);
-
-        const br = document.createElement('br');
-        document.body.appendChild(br);
+    private async index2(params: string) {
+        const Home2View = (await import("views/home2/homeView")).default;
+        const view = new Home2View(params);
+        super.RenderView(view);
     }
 }
