@@ -56,7 +56,7 @@ export default class AppRouter extends Backbone.Router {
         } else {
             actionName = actionName.toLowerCase();
             const func = controller.getAction(actionName);
-            await func.apply(controller, params);
+            await func.call(controller, params);
         }
     }
 }

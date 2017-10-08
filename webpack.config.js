@@ -5,8 +5,20 @@ const HTMLWebpackPlugin = require('html-webpack-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const { CheckerPlugin } = require('awesome-typescript-loader')
 const { TsConfigPathsPlugin } = require('awesome-typescript-loader');
+const envConfig = require("./env.config.json")
 
 const prod = process.argv.indexOf('-p') !== -1;
+const envObj = (function () {
+    switch (process.env.NODE_ENV) {
+        case "test":
+            return envConfig.test;
+        case "production":
+            return envConfig.production
+        case "dev":
+        default:
+            return envConfig.dev;
+    }
+})();
 
 module.exports = {
     entry: {
@@ -19,6 +31,15 @@ module.exports = {
             {
                 test: /\.tsx?$/,
                 loader: 'awesome-typescript-loader',
+            },
+            {
+                test: /\.html$/,
+                use: [{
+                    loader: 'html-loader',
+                    options: {
+                        minimize: true
+                    }
+                }],
             }
         ],
     },
@@ -27,10 +48,14 @@ module.exports = {
             names: ['vendor', 'commonModules', 'manifest']
         }),
         new HTMLWebpackPlugin({
-            title: 'Code Splitting'
+            template: "index.ejs",
+            env: envObj
         }),
         new ClearWebpackPlugin(['./dist']),
-        new CheckerPlugin()
+        new CheckerPlugin(),
+        new webpack.DefinePlugin({
+            __EnvConfig__: JSON.stringify(envObj)
+        })
     ],
     resolve: {
         // Add `.ts` and `.tsx` as a resolvable extension. 
